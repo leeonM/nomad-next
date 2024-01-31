@@ -3,9 +3,9 @@
 import { CreateUserParams, UpdateUserParams } from "@/types"
 import { handleError } from "../utils"
 import { connectToDatabase } from "../database"
-import User from "../database/models/user.models"
+import User from "../database/models/user.model"
+import Trip from "../database/models/trip.model"
 import { revalidatePath } from "next/cache"
-import Trip from "../database/models/trip.models"
 
 export const createUser = async (user:CreateUserParams) =>{
 
