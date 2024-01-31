@@ -28,7 +28,7 @@ export async function POST(req: Request) {
   }
  
   // Get the body
-  const payload = await req.json()
+  const payload = await req.text()
   const body = JSON.stringify(payload);
  
   // Create a new Svix instance with your secret.
@@ -55,27 +55,28 @@ export async function POST(req: Request) {
   const eventType = evt.type;
  
   if (eventType === 'user.created'){
-    const {id, email_addresses, image_url,first_name, username} = evt.data;
+    const {id,email_addresses,image_url,first_name,username} =evt.data
 
     const user = {
-      clerkId: id,
+      clerkId:id,
       email: email_addresses[0].email_address,
+      // exclamation mark means it can sometimes be null
+      username:username!,
       firstName: first_name,
-      username: username!,
-      photo: image_url,
+      photo:image_url
     }
 
     const newUser = await createUser(user)
 
     if (newUser){
-      await clerkClient.users.updateUserMetadata(id,{
+      await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userId: newUser._id,
+          userId: newUser._id
         }
       })
     }
 
-  return NextResponse.json({message: 'OK', user: newUser})
+    return NextResponse.json({message:'OK', user: newUser})
   }
 
   // if (eventType === 'user.updated') {

@@ -7,17 +7,18 @@ import User from "../database/models/user.model"
 import Trip from "../database/models/trip.model"
 import { revalidatePath } from "next/cache"
 
-export const createUser = async (user:CreateUserParams) =>{
+export const createUser = async (user:CreateUserParams) => {
+  try {
+    await connectToDatabase();
 
-    try {
-        await connectToDatabase();
+    const newUser = await User.create(user);
+    
 
-        const newUser = await User.create(user)
-
-        return JSON.parse(JSON.stringify(newUser))
-    } catch (error) {
-        handleError(error)
-    }
+    // get a javascript object of the user
+    return JSON.parse(JSON.stringify(newUser));
+  } catch (error) {
+    handleError(error)
+  }
 }
 
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
