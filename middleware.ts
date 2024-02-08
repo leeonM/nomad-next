@@ -7,10 +7,11 @@ export default authMiddleware({
         '/communities',
         '/api/webhook/clerk',
         '/api/uploadthing',
+        '/community',
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
-        '/api/uploadthing'
+        '/api/uploadthing',
     ]
 });
  

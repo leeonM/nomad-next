@@ -5,7 +5,7 @@ export const headerLinks = [
     },
     {
       label: 'Create Trip',
-      route: '/events/create',
+      route: '/trips/create',
     },
     {
       label: 'My Profile',
@@ -13,15 +13,47 @@ export const headerLinks = [
     },
   ]
   
-  export const eventDefaultValues = {
+  export const tripDefaultValues = {
     title: '',
     description: '',
-    location: '',
+    tripLocation: '',
     imageUrl: '',
-    startDateTime: new Date(),
-    endDateTime: new Date(),
+    startDate: new Date(),
+    endDate: new Date(),
     categoryId: '',
-    price: '',
-    isFree: false,
     url: '',
   }
+
+  export const communityDefaultValues = {
+    name: '',
+    bio: '',
+    communityLocation: '',
+  }
+
+  export const socialLinks = [
+    {
+      label: 'instagram',
+      route: 'www.instagram.com',
+      icon: '/assets/icons/instagram.svg'
+    },
+    {
+      label: 'facebook',
+      route: 'www.facebook.com',
+      icon: '/assets/icons/facebook.svg'
+    },
+    {
+      label: 'Linkedin',
+      route: 'www.linkedin.com',
+      icon: '/assets/icons/linkedin.svg'
+    },
+    {
+      label: 'github',
+      route: 'www.github.com',
+      icon: '/assets/icons/github.svg'
+    },
+    {
+      label: 'tiktok',
+      route: 'www.tiktok.com',
+      icon: '/assets/icons/tiktok.svg'
+    },
+  ]

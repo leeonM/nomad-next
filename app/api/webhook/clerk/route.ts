@@ -4,6 +4,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 import { createUser, deleteUser, updateUser } from '@/lib/actions/user.actions'
 import { clerkClient } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
+import { request } from 'http'
  
 export async function POST(req: Request) {
  
@@ -79,20 +80,50 @@ export async function POST(req: Request) {
     return NextResponse.json({message:'OK', user: newUser})
   }
 
-  // if (eventType === 'user.updated') {
-  //   const {id, image_url, first_name, username,bio, userLocation } = evt.data
+  if (eventType === 'user.updated') {
 
-  //   const user = {
-  //     firstName: first_name,
-  //     username: username!,
-  //     photo: image_url,
-  //     bio:
-  //   }
+    const {id, image_url, first_name, username,photo, userLocation, bio, occupation,instagram,linkedin,facebook,github,tiktok,age} = await req.json()
 
-  //   const updatedUser = await updateUser(id, user)
+    const user = {
+      firstName: first_name,
+      username: username!,
+      photo: photo!,
+      userLocation: userLocation!,
+      bio: bio!,
+      occupation: occupation!,
+      instagram: instagram!,
+      linkedin: linkedin!,
+      facebook: facebook!,
+      github: github!,
+      tiktok: tiktok!,
+      age: age!,
+    }
 
-  //   return NextResponse.json({ message: 'OK', user: updatedUser })
-  // }
+    const updatedUser = await updateUser(id, user)
+    
+      await clerkClient.users.updateUserMetadata(id, {
+        unsafeMetadata: {
+          photo: user.photo!,
+          userLocation: user.userLocation!,
+          bio: user.bio!,
+          occupation: user.occupation!,
+          instagram: user.instagram!,
+          linkedin: user.linkedin!,
+          facebook: user.facebook!,
+          github: user.github!,
+          tiktok: user.tiktok!,
+          age: user.age!,
+        },
+        publicMetadata:{
+          firstName: user.firstName,
+          username: user.username,
+          image_url:user.photo,
+        }
+      })
+   
+
+    return NextResponse.json({ message: 'OK', user: updatedUser })
+  }
 
   if (eventType === 'user.deleted') {
     const { id } = evt.data

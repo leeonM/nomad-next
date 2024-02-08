@@ -7,21 +7,50 @@ export type CreateUserParams = {
   }
   
   export type UpdateUserParams = {
+    userId: string
+    user:{
     firstName: string
     username: string
     photo: string
     userLocation: string
-    bio: string
+    bio?: string
+    occupation?: string
+    instagram?: string
+    linkedin?: string
+    facebook?: string
+    github?: string
+    tiktok?: string
+    age?: string
+  },
+    path: string
+  }
+
+  export type UpdateClerkUserParams = {
+    firstName: string
+    username: string
+    photo: string
+    userLocation?: UserUnsafeMetadata
+    bio?: UserUnsafeMetadata
+    occupation?: UserUnsafeMetadata
+    instagram?: UserUnsafeMetadata
+    linkedin?: UserUnsafeMetadata
+    facebook?: UserUnsafeMetadata
+    github?: UserUnsafeMetadata
+    tiktok?: UserUnsafeMetadata
+    age?: UserUnsafeMetadata
+  }
+
+  export type GetUserByUsernameParams = {
+    username: string
   }
   
-  // ====== EVENT PARAMS
+  // ====== TRIP PARAMS
   export type CreateTripParams = {
     userId: string
     trip: {
       title: string
       description: string
-      tripCity: string
-      tripCountry: string
+      tripLocation: string
       imageUrl: string
       startDate: Date
       endDate: Date
@@ -29,17 +58,27 @@ export type CreateUserParams = {
       url: string
     }
     path: string
+    communityId?: string
+  }
+
+  export type CreateCommunityParams = {
+    userId: string
+    community: {
+      name: string,
+      bio: string,
+      communityLocation: string,
+    },
+    path:string
   }
   
   export type UpdateTripParams = {
     userId: string
-    event: {
+    trip: {
       _id: string
       title: string
       imageUrl: string
       description: string
-      tripCity: string
-      tripCountry: string
+      tripLocation: string
       startDate: Date
       endDate: Date
       categoryId: string
@@ -47,9 +86,45 @@ export type CreateUserParams = {
     }
     path: string
   }
+
+  export type UpdateCommunityParams = {
+    userId: string
+    community: {
+      _id:string,
+      name: string,
+      bio: string,
+      communityLocation: string,
+    },
+    path: string
+  }
   
   export type DeleteTripParams = {
-    eventId: string
+    tripId: string
+    path: string
+  }
+
+  export type LikeTripParams = {
+    id:string
+    userId:string
+    path:string
+  }
+
+  export type LikeCommunityParams = {
+    id:string
+    userId:string
+    path:string
+  }
+
+  export type JoinCommunityParams = {
+    id:string
+    userId:string
+    path:string
+  }
+
+  export type CreateCommentParams = {
+    text: string
+    userId: string
+    parentId: string
     path: string
   }
   
@@ -59,9 +134,21 @@ export type CreateUserParams = {
     limit: number
     page: number
   }
+
+  export type GetAllCommunitiesParams = {
+    query: string
+    limit: number
+    page: number
+  }
   
   export type GetTripsByUserParams = {
     userId: string
+    limit?: number
+    page: number
+  }
+
+  export type GetTripsByCommunityParams = {
+    communityId: string
     limit?: number
     page: number
   }
@@ -78,8 +165,7 @@ export type CreateUserParams = {
     title: string
     description: string
     imageUrl: string
-    tripCity: string
-    tripCountry: string
+    tripLocation: string
     startDate: Date
     endDate: Date
     url: string
@@ -96,6 +182,8 @@ export type CreateUserParams = {
         _id: string
         name: string
       }
+    likes: string[],
+    comments: string[],
   }
   
   // ====== CATEGORY PARAMS
@@ -125,7 +213,7 @@ export type CreateUserParams = {
     searchString: string
   }
   
-  export type GetOrdersByUserParams = {
+  export type GetLikedByUserParams = {
     userId: string | null
     limit?: number
     page: string | number | null
@@ -145,5 +233,15 @@ export type CreateUserParams = {
   
   export type SearchParamProps = {
     params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+  }
+
+  export type CommunityParamProps = {
+    params: {id:string}
+    searchParams: { [key: string]: string | string[] | undefined }
+  }
+
+  export type SearchUsernameParamProps = {
+    params: { username: string }
     searchParams: { [key: string]: string | string[] | undefined }
   }

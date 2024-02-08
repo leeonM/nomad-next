@@ -1,6 +1,6 @@
 'use server'
 
-import { CreateUserParams, UpdateUserParams } from "@/types"
+import { CreateUserParams, GetUserByUsernameParams, UpdateClerkUserParams, UpdateUserParams } from "@/types"
 import { handleError } from "../utils"
 import { connectToDatabase } from "../database"
 import User from "../database/models/user.model"
@@ -21,7 +21,7 @@ export const createUser = async (user:CreateUserParams) => {
   }
 }
 
-export async function updateUser(clerkId: string, user: UpdateUserParams) {
+export async function updateUser(clerkId: string, user: UpdateClerkUserParams) {
     try {
       await connectToDatabase()
   
@@ -67,3 +67,65 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
       handleError(error)
     }
   }
+
+  export async function getUserbyUsername(username:string){
+    try {
+      await connectToDatabase()
+      const condition = {username: username}
+
+      const user = await User.findOne(condition)
+
+      return JSON.parse(JSON.stringify(user))
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
+  export async function getUserByIdAndUpdate({
+    userId,
+    user,
+    path
+  }:UpdateUserParams
+  ){
+    try {
+      await connectToDatabase()
+
+
+    const updatedUser = await User.findOneAndUpdate(
+      {_id:userId}, 
+      {
+        username:user.username,
+        bio:user.bio,
+        userLocation:user.userLocation,
+        firstName:user.firstName,
+        instagram: user.instagram,
+        photo:user.photo,
+        tiktok: user.tiktok,
+        linkedin: user.linkedin,
+        github: user.github,
+        facebook: user.facebook,
+        occupation: user.occupation,
+        age: user.age,
+    },{upsert: true})
+
+    revalidatePath(path)
+
+      return JSON.parse(JSON.stringify(updatedUser))
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
+  export async function getUserById(userId: string){
+    try {
+      await connectToDatabase()
+
+      const user = await User.findById(userId)
+      return JSON.parse(JSON.stringify(user))
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
+
+  

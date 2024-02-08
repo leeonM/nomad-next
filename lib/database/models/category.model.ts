@@ -1,8 +1,8 @@
 import { Schema, model, models } from "mongoose";
 
 export interface ICategory extends Document {
-    _id:String;
-    name:String;
+    _id:string;
+    name:string;
 }
 
 const CategorySchema = new Schema({
@@ -11,4 +11,4 @@ const CategorySchema = new Schema({
 
 const Category = models.Category || model('Category', CategorySchema);
 
-export default CategorySchema;
+export default Category;
