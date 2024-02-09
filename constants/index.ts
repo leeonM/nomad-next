@@ -11,6 +11,10 @@ export const headerLinks = [
       label: 'My Profile',
       route: '/profile',
     },
+    {
+      label: 'Create Community',
+      route: '/community/create',
+    },
   ]
   
   export const tripDefaultValues = {

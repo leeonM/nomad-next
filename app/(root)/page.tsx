@@ -3,6 +3,7 @@ import Collection from "@/components/shared/Collection";
 import CommunityCard from "@/components/shared/CommunityCard";
 import CommunityCollection from "@/components/shared/CommunityCollection";
 import Search from "@/components/shared/Search";
+import SearchCommunity from "@/components/shared/SearchCommunity";
 import SearchLocation from "@/components/shared/SearchLocation";
 import { Button } from "@/components/ui/button";
 import { getAllCommunities } from "@/lib/actions/community.actions";
@@ -15,9 +16,13 @@ import Link from "next/link";
 export default async function Home({searchParams}:SearchParamProps) {
   const page = Number(searchParams?.page) || 1
   const searchText = (searchParams?.query as string) || ''
-  const searchTextByLocation = (searchParams?.query as string) || ''
   const category = (searchParams?.category as string) || ''
-  const communities = await getAllCommunities({query:'',page,limit:6})
+  const community = (searchParams?.communityQuery as string) || ''
+  const communities = await getAllCommunities({
+    communityQuery:community,
+    page,
+    limit:6
+  })
   const trips = await getAllTrips({
     query:searchText,
     category,
@@ -77,16 +82,21 @@ export default async function Home({searchParams}:SearchParamProps) {
           />
       </section>
 
-      <section className='wrapper my-8 flex flex-col gap-8 md:gap-12'>
+      <section id='communities' className='wrapper my-8 flex flex-col gap-8 md:gap-12'>
       <h2 className='h2-bold'>Communities</h2>
+
+          <div className="flex w-full md:w-1/2 flex-col gap-5 md:flex-row">
+            <SearchCommunity />
+          </div>
+
           {/* trips */}
           <CommunityCollection
            data={communities?.data}
-           emptyTitle="No Trips Found"
-           emptyStateSubtext="Why don't you add a trip"
+           emptyTitle="No Communities Found"
+           emptyStateSubtext="Why don't you add a community"
            limit={6}
            page={page}
-           totalPages={trips?.totalPages}
+           totalPages={communities?.totalPages}
            userId={userId}
           />
     </section>

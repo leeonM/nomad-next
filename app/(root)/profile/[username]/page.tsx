@@ -64,23 +64,23 @@ const UserProfilePage = async ({params: {username},searchParams}:SearchUsernameP
              </p>
              <div className='flex gap-2'>
                 {user.instagram && (
-                  <a href={`https://${user.instagram}`}>
+                  <a href={user.instagram} target='_blank' rel="noreferrer">
                     <Image src='/assets/icons/instagram.svg'alt='instagram' width={30} height={30} className='cursor-pointer'/>
                   </a>)}
                   {user.facebook && (
-                  <a href={`https://${user.facebook}`}>
+                  <a href={user.facebook} target='_blank' rel="noreferrer">
                     <Image src='/assets/icons/facebook.svg'alt='facebook' width={30} height={30} className='cursor-pointer'/>
                   </a>)}
                   {user.tiktok && (
-                  <a href={`https://${user.tiktok}`}>
+                  <a href={user.tiktok} target='_blank' rel="noreferrer">
                     <Image src='/assets/icons/tiktok.svg'alt='tiktok' width={30} height={30} className='cursor-pointer'/>
                   </a>)}
                   {user.github && (
-                  <a href={`https://${user.github}`}>
+                  <a href={user.github} target='_blank' rel="noreferrer">
                     <Image src='/assets/icons/github.svg'alt='github' width={30} height={30} className='cursor-pointer'/>
                   </a>)}
                   {user.linkedin && (
-                  <a href={`https://${user.linkedin}`} target={`_blank`} rel={"noreferrer"}>
+                  <a href={user.linkedin} target='_blank' rel="noreferrer">
                     <Image src='/assets/icons/linkedin.svg'alt='linkedin' width={30} height={30} className='cursor-pointer'/>
                   </a>)}
              </div>

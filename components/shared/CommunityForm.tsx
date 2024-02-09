@@ -179,7 +179,7 @@ const CommunityForm = ({userId, type, community, communityId}:CommunityFormProps
         disabled={form.formState.isSubmitting}
         className='button col-span-2 w-full'
         >
-        {form.formState.isSubmitting ? 'Submitting' : `${type} Trip`}
+        {form.formState.isSubmitting ? 'Submitting' : `${type} Community`}
         </Button>
       </form>
     </Form>

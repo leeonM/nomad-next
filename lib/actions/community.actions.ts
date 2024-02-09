@@ -350,14 +350,14 @@ export async function joinCommunity ({
     }
 }
 
-export const getAllCommunities = async ({query, limit=6, page}:GetAllCommunitiesParams) => {
+export const getAllCommunities = async ({communityQuery, limit=6, page}:GetAllCommunitiesParams) => {
   try {
       await connectToDatabase()
 
-      const titleOrLocationCondition = query ? {
+      const titleOrLocationCondition = communityQuery ? {
         $or: [
-            { title: { $regex: query, $options: 'i' } },
-            { tripLocation: { $regex: query, $options: 'i' } }
+            { name: { $regex: communityQuery, $options: 'i' } },
+            { communityLocation: { $regex: communityQuery, $options: 'i' } }
         ]
     } : {}
     
@@ -366,12 +366,12 @@ export const getAllCommunities = async ({query, limit=6, page}:GetAllCommunities
     }
 
     const skipAmount = (Number(page) - 1) * limit
-    const tripsQuery = Community.find(conditions)
+    const communitiesQuery = Community.find(conditions)
       .sort({ createdAt: 'desc' })
       .skip(skipAmount)
       .limit(limit)
 
-      const communities = await populateCommunity(tripsQuery)
+      const communities = await populateCommunity(communitiesQuery)
 
       const communityCount = await Community.countDocuments(conditions)
 

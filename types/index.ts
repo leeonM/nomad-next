@@ -12,7 +12,7 @@ export type CreateUserParams = {
     firstName: string
     username: string
     photo: string
-    userLocation: string
+    userLocation?: string
     bio?: string
     occupation?: string
     instagram?: string
@@ -136,7 +136,7 @@ export type CreateUserParams = {
   }
 
   export type GetAllCommunitiesParams = {
-    query: string
+    communityQuery: string
     limit: number
     page: number
   }
