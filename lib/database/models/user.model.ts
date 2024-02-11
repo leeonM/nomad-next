@@ -19,6 +19,7 @@ export interface IUser extends Document {
     facebook: string;
     occupation: string;
     age: string;
+    admin: boolean;
 }
 
 const UserSchema = new Schema({
@@ -36,6 +37,7 @@ const UserSchema = new Schema({
     github: {type:String},
     facebook: {type:String},
     age: {type:String},
+    admin: {type:Boolean, default:false},
     likedTrips: [
         {
             type: Schema.Types.ObjectId,

@@ -15,6 +15,10 @@ export const headerLinks = [
       label: 'Create Community',
       route: '/community/create',
     },
+    {
+      label: 'Blog',
+      route: '/blog',
+    }
   ]
   
   export const tripDefaultValues = {
@@ -26,6 +30,13 @@ export const headerLinks = [
     endDate: new Date(),
     categoryId: '',
     url: '',
+  }
+
+  export const blogDefaultValues = {
+    title: '',
+    subTitle: '',
+    text: '',
+    imageUrl: '',
   }
 
   export const communityDefaultValues = {

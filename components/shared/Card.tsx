@@ -17,6 +17,16 @@ const Card = ({trip,isOrganizer,hasLiked}:CardProps) => {
   const {sessionClaims} = auth()
   const userId = sessionClaims?.userId as string
   const isTripCreator = trip.organizer._id.toString() === userId
+  const eventDate = new Date(trip.endDate); 
+  const currentDate = new Date();
+
+  const tripHasOccurred = currentDate > eventDate;
+
+  const beforeEventStyle = { backgroundImage: `url(${trip.imageUrl})` };
+  const afterEventStyle = {
+    backgroundImage: `url(${trip.imageUrl})`,
+    filter: 'grayscale(100%)',
+  };
 
 
   return (
@@ -25,26 +35,31 @@ const Card = ({trip,isOrganizer,hasLiked}:CardProps) => {
     rounded-xl bf-white shadow-md transition-all 
     hover:shadow-lg md:min-h-[438px]'>
         <Link href={`/trips/${trip._id}`}
-        style={{backgroundImage: `url(${trip.imageUrl})`}}
-        className='flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500'
+        style={tripHasOccurred ? afterEventStyle : beforeEventStyle}
+        className={`flex-center flex-grow bg-gray-50 bg-cover bg-center text-red-200`}
         >
+          {tripHasOccurred && (
+            <div className="absolute inset-0 flex-center z-10">
+            <span className="font-bold text-3xl">Trip Ended</span>
+          </div>
+          )}
         </Link>
 
         {isTripCreator && (
             <div className='absolute right-2 top-2 flex flex-col gap-4 
             rounded-xl bg-white p-3 shadow-sm transition-all'>
-                <Link href={`/trips/${trip._id}/update`}>
+                {!tripHasOccurred && <Link href={`/trips/${trip._id}/update`}>
                     <Image 
                     src='/assets/icons/edit.svg'
                     alt='Edit'
                     width={20}
                     height={20}
                     />
-                </Link>
+                </Link>}
 
-                <DeleteConfirmation 
+                {tripHasOccurred && <DeleteConfirmation 
                  tripId={trip._id}
-                />
+                />}
             </div>
         )}
         <div
@@ -59,6 +74,12 @@ const Card = ({trip,isOrganizer,hasLiked}:CardProps) => {
             bg-grey-500/10 px-4 py-1 text-black line-clamp-1'>
                {trip.tripLocation} 
             </p>
+            {tripHasOccurred && (
+             <p className='p-semibold-14 w-fit rounded-full 
+             bg-grey-500/10 px-4 py-1 text-red-600 line-clamp-1'>
+                Trip Ended
+             </p>
+            )}
         </div>
 
         <p className='p-medium-14 text-grey-500 gap-2'>

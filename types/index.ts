@@ -70,6 +70,29 @@ export type CreateUserParams = {
     },
     path:string
   }
+
+  export type CreateBlogParams = {
+    userId: string
+    blog: {
+      title: string
+      subTitle: string
+      text: string
+      imageUrl: string
+    }
+    path: string
+  }
+
+  export type UpdateBlogParams = {
+    userId: string
+    blog: {
+      _id: string
+      title: string
+      subTitle: string
+      text: string
+      imageUrl: string
+    }
+    path: string
+  }
   
   export type UpdateTripParams = {
     userId: string
@@ -134,6 +157,7 @@ export type CreateUserParams = {
     limit: number
     page: number
   }
+
 
   export type GetAllCommunitiesParams = {
     communityQuery: string

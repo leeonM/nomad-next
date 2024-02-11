@@ -32,4 +32,11 @@ export const communityFormSchema = z.object({
   bio: z.string().min(3, 'Bio must be at least 3 characters').max(500,'Bio must be less than 500 characters'),
   communityLocation: z.string(),
 })
+
+export const blogFormSchema = z.object({
+  title: z.string().min(3,'Blog title must be at least 3 characters'),
+  subTitle: z.string().min(3,'Blog subtitle must be at least 3 characters'),
+  text: z.string().min(100, 'Description must be at least 3 characters'),
+  imageUrl: z.string(),
+})
   

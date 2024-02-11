@@ -25,6 +25,17 @@ const TripPage = async ({params:{id},searchParams}: SearchParamProps) => {
   const liked = trip.likes.includes(userId)
   const comments = trip?.comments
 
+  const eventDate = new Date(trip.endDate); 
+  const currentDate = new Date();
+
+  const tripHasOccurred = currentDate > eventDate;
+
+  const beforeEventStyle = { backgroundImage: `url(${trip.imageUrl})` };
+  const afterEventStyle = {
+    backgroundImage: `url(${trip.imageUrl})`,
+    filter: 'grayscale(100%)',
+  };
+
   return (
     <>
     <section className='flex justify-center bg-grey-50 bg-dotted-pattern bg-contain'>
@@ -62,7 +73,14 @@ const TripPage = async ({params:{id},searchParams}: SearchParamProps) => {
                 </div>
               </div>
 
-              {/* checkout */}
+              <div>
+              {tripHasOccurred && (
+             <p className='p-semibold-18 w-fit rounded-full 
+             bg-grey-500/10 px-4 py-1 text-red-600 line-clamp-1'>
+                Trip Ended
+             </p>
+            )}
+              </div>
 
               <div className='flex flex-col gap-5'>
                   <div className='flex gap-2 md:gap-3'>
